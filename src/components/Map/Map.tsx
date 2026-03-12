@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MapContainer, TileLayer, Popup, Marker, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import type { BusInfo } from "../../types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-interface mapCoordinatedProps {
-  busFeatures: BusInfo | null;
+interface coordinatesProps {
+  latitude: number;
+  longitude: number;
 }
-// Fix default icon paths
+
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "/leaflet/marker-icon-2x.png",
@@ -16,14 +17,29 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "/leaflet/marker-shadow.png",
 });
 
-const Map: React.FC<mapCoordinatedProps> = ({
-  busFeatures,
-}: mapCoordinatedProps) => {
+const Map: React.FC = () => {
+  const [coordinates, setCoordinates] = useState<coordinatesProps>();
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    async function fetchLatLng() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/mobile/reveiveLatLng",
+          { params: { id } },
+        );
+        setCoordinates(response.data);
+      } catch (error) {
+        console.log("cannot get latlng");
+      }
+    }
+    // setInterval(fetchLatLng, 3000);
+    fetchLatLng();
+  }, [id]);
   const position: [number, number] =
-    busFeatures?.lattitude && busFeatures?.longititude
-      ? [busFeatures.lattitude, busFeatures.longititude]
-      : [1, 2];
-  console.log(busFeatures?.lattitude, busFeatures?.longititude);
+    coordinates?.latitude && coordinates?.longitude
+      ? [coordinates.latitude, coordinates.longitude]
+      : [27.7172, 85.324];
 
   return (
     <div className="h-96 w-full p-2 bg-gray-300 shadow-md rounded-lg">
@@ -49,7 +65,7 @@ const Map: React.FC<mapCoordinatedProps> = ({
   );
 };
 
-function RecenterMap({ center }: { center: [number, number]}) {
+function RecenterMap({ center }: { center: [number, number] }) {
   const map = useMap();
   useEffect(() => {
     map.setView(center);

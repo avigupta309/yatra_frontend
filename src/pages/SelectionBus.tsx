@@ -20,7 +20,6 @@ const SelectionBus: React.FC = () => {
           `http://localhost:3000/api/bus/specificbus/${id}`,
         );
         setBusFeatures(response.data.bus);
-        console.log(response.data);
       } catch (error) {
         console.log((error as Error).message);
       }
