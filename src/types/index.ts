@@ -68,7 +68,7 @@ export interface User {
   email: string;
   phone: string;
   role: string;
-  profilePic: string;
+  profileImage: string;
 }
 
 export interface SearchFilters {

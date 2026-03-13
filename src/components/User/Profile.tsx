@@ -17,8 +17,7 @@ interface authProps {
 export const UserProfile: React.FC = () => {
   const backUrl = import.meta.env.VITE_BACKEND_URL;
   const { authUser } = useAuth();
-  const userId = authUser?.id;
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string | null>();
 
   const {
     register,
@@ -36,7 +35,7 @@ export const UserProfile: React.FC = () => {
     if (data.profilePic && data.profilePic.length > 0) {
       formData.append("profilePic", data.profilePic[0]);
     } else {
-     toast.error("No image selected");
+      toast.error("No image selected");
     }
     try {
       await axios.put(`${backUrl}/api/user/channgepwd/`, formData);
@@ -48,28 +47,13 @@ export const UserProfile: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!userId) return;
+    reset({
+      fullName: authUser?.fullName,
+      email: authUser?.email,
+    });
+    setProfileImage(authUser?.profileImage);
+  }, []);
 
-    async function fetchUser() {
-      try {
-        const response = await axios.get(
-          `${backUrl}/api/user/viewoneuser/${userId}`,
-        );
-
-        const userData = response.data.data;
-        setProfileImage(userData.profileImage);
-
-        reset({
-          fullName: userData.fullName,
-          email: userData.email,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchUser();
-  }, [userId, reset]);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

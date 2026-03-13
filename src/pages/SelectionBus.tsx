@@ -15,7 +15,7 @@ const SelectionBus: React.FC = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
-    async function FetchingCityDetails() {
+    async function fetchingBusDetails() {
       try {
         const response = await axios.get(
           `${backUrl}/api/bus/specificbus/${id}`,
@@ -25,7 +25,7 @@ const SelectionBus: React.FC = () => {
         console.log((error as Error).message);
       }
     }
-    FetchingCityDetails();
+    fetchingBusDetails();
   }, [id]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 text-gray-800">
