@@ -12,7 +12,6 @@ interface LoginFormData {
 
 export const LoginPage: React.FC = () => {
   const backUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log(backUrl)
   const { setAuthUser, setLogged } = useAuth();
   const {
     register,
