@@ -1,4 +1,4 @@
-import { Edit } from "lucide-react";
+import { Backpack, Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DriverModal } from "./modal/driver";
@@ -11,15 +11,14 @@ interface userProps {
 }
 
 export function Drivers() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [drivers, setDrivers] = useState<userProps[]>([]);
   const [driverId, setDriverId] = useState<string>("");
   const [viewDriver, setViewDriver] = useState<boolean>(false);
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/driver/viewalldriver",
-        );
+        const response = await axios.get(`${backUrl}/api/driver/viewalldriver`);
         setDrivers(response.data.driver);
       } catch (error) {}
     }
@@ -60,7 +59,6 @@ export function Drivers() {
 
                   <td className="px-4 py-3">{driver.phoneNumber}</td>
 
-                  
                   <td className="text-red-500 hover:text-red-600">
                     <Edit
                       onClick={() => {

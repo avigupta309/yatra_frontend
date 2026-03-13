@@ -5,15 +5,14 @@ import axios from "axios";
 import { BusModal } from "./modal/Bus";
 
 export function Bus() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [bus, setBus] = useState<BusInfo[]>([]);
   const [busId, setBusId] = useState<string>("");
   const [viewModal, setViewModal] = useState<boolean>(false);
   useEffect(() => {
     async function fetchBus() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/bus/viewbus",
-        );
+        const response = await axios.get(`${backUrl}/api/bus/viewbus`);
         setBus(response.data.bus);
       } catch (error) {}
     }
@@ -70,7 +69,6 @@ export function Bus() {
             }}
             busId={busId}
           />
-
         )}
       </div>
     </div>

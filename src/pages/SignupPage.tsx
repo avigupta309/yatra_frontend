@@ -19,6 +19,7 @@ interface usersignupProps {
 }
 
 export const SignupPage: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const {
     register,
     handleSubmit,
@@ -34,10 +35,7 @@ export const SignupPage: React.FC = () => {
 
   const onSubmit = async (data: SignupFormData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/user/usersignup",
-        data,
-      );
+      const response = await axios.post(`${backUrl}/api/user/usersignup`, data);
 
       setUserSignUp(response.data);
       toast.success("The user account has been created successfully.");

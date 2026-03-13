@@ -18,6 +18,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const Map: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [coordinates, setCoordinates] = useState<coordinatesProps>();
   const { id } = useParams<{ id: string }>();
 
@@ -25,7 +26,7 @@ const Map: React.FC = () => {
     async function fetchLatLng() {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/mobile/reveiveLatLng",
+          `${backUrl}/api/mobile/reveiveLatLng`,
           { params: { id } },
         );
         setCoordinates(response.data);

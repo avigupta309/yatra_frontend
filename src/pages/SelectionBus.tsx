@@ -10,6 +10,7 @@ import Map from "../components/Map/Map";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 const SelectionBus: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [busFeatures, setBusFeatures] = useState<BusInfo | null>(null);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -17,7 +18,7 @@ const SelectionBus: React.FC = () => {
     async function FetchingCityDetails() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/bus/specificbus/${id}`,
+          `${backUrl}/api/bus/specificbus/${id}`,
         );
         setBusFeatures(response.data.bus);
       } catch (error) {
@@ -78,7 +79,7 @@ const SelectionBus: React.FC = () => {
           showInfoModal={showInfoModal}
           setShowInfoModal={setShowInfoModal}
         />
-        <Map busFeatures={busFeatures} />
+        <Map />
       </div>
     </div>
   );

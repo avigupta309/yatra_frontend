@@ -6,14 +6,14 @@ import { DisplayDate } from "../layout/DisplayDate";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
-
 interface FormValues {
   source: string;
   destination: string;
   type?: "AC" | "Non-AC";
 }
 
-export function SearchForm(){
+export function SearchForm() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [isSwapping, setIsSwapping] = useState(false);
   const [, setCookies] = useCookies(["busData"]);
   const [city, setCity] = useState<string[]>([]);
@@ -34,9 +34,7 @@ export function SearchForm(){
   useEffect(() => {
     async function fetchCityName() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/city/viewcity"
-        );
+        const response = await axios.get(`${backUrl}/api/city/viewcity`);
         setCity(response.data.city[0].cityName);
       } catch (error) {
         console.log((error as Error).message);
@@ -60,7 +58,7 @@ export function SearchForm(){
       source: values.source,
       destination: values.destination,
       type: values.type,
-      updateAt:Date.now()
+      updateAt: Date.now(),
     };
     // onSearch(searchFilters);
     setCookies("busData", searchFilters, { path: "/" });

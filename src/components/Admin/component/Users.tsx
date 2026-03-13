@@ -11,15 +11,14 @@ interface userProps {
 }
 
 export function Users() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [users, setUsers] = useState<userProps[]>([]);
   const [userId, setUserId] = useState<string>("");
   const [viewUser, setViewUser] = useState<boolean>(false);
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/user/viewuser",
-        );
+        const response = await axios.get(`${backUrl}/api/user/viewuser`);
         setUsers(response.data.users);
       } catch (error) {}
     }

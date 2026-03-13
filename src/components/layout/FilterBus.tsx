@@ -4,8 +4,9 @@ import { Bus } from "../../types";
 import axios from "axios";
 import { MapPin } from "lucide-react";
 import { FilterBusCard } from "../home/FilterBusCard";
-import { toast } from "react-toastify";
+
 const FilterBus: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [cookies, , removeCookie] = useCookies(["busData"]);
 
   const { source, destination, type } = cookies.busData || {};
@@ -18,10 +19,9 @@ const FilterBus: React.FC = () => {
   useEffect(() => {
     async function fetchFilterBusList() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/bus/filterbus",
-          { params: { source, destination, type: type } },
-        );
+        const response = await axios.get(`${backUrl}/api/bus/filterbus`, {
+          params: { source, destination, type: type },
+        });
         setSearchResults(response.data.filterBus);
         if (source && destination) {
           setIsSearched(true);

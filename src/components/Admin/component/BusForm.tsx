@@ -4,6 +4,7 @@ import { Save, X } from "lucide-react";
 import axios from "axios";
 
 export function BusAdd() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const {
     register,
     handleSubmit,
@@ -14,12 +15,8 @@ export function BusAdd() {
   const inputFielsStyle =
     "w-full border rounded-lg px-4 py-3 pr-10 focus:ring-2 focus:ring-blue-500 outline-none";
   const onSubmit = async (data: BusFormInputs) => {
-
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/bus/busupload",
-        data,
-      );
+      const response = await axios.post(`${backUrl}/api/bus/busupload`, data);
     } catch (error) {}
     // reset();
   };

@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/Auth";
 import { ticketDetailsProps } from "../../types";
 
 export const SelectedBus = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [ticketDetails, setTicketDetails] = useState<ticketDetailsProps[]>([]);
   const [loading, setLoading] = useState(true);
   const { authUser } = useAuth();
@@ -13,10 +14,9 @@ export const SelectedBus = () => {
 
     async function fetchTicket() {
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/bookedticket/view",
-          { userEmail: authUser?.email },
-        );
+        const response = await axios.post(`${backUrl}/api/bookedticket/view`, {
+          userEmail: authUser?.email,
+        });
         setTicketDetails(response.data.ticketBooked);
       } catch (error) {
         console.error("Error fetching tickets:", error);
@@ -51,7 +51,7 @@ export const SelectedBus = () => {
           🎫 My Booked Tickets
         </h1>
 
-        {ticketDetails.map((ticket,i) => {
+        {ticketDetails.map((ticket, i) => {
           const totalPrice = ticket.busId.farePerSeat * ticket.seats.length;
 
           return (

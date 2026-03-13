@@ -18,6 +18,7 @@ interface userProps {
 }
 
 export function UserModal({ closeModal, userId }: ModalProps) {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const {
     register,
     handleSubmit,
@@ -28,7 +29,7 @@ export function UserModal({ closeModal, userId }: ModalProps) {
   useEffect(() => {
     async function fetchUser() {
       const response = await axios.get(
-        `http://localhost:3000/api/user/viewoneuser/${userId}`,
+        `${backUrl}/api/user/viewoneuser/${userId}`,
       );
       const userData = response.data.data;
       reset({
@@ -55,10 +56,7 @@ export function UserModal({ closeModal, userId }: ModalProps) {
     }
     console.log(data);
     try {
-      await axios.put(
-        `http://localhost:3000/api/user/changerole/${userId}`,
-        formData,
-      );
+      await axios.put(`${backUrl}/api/user/changerole/${userId}`, formData);
       toast.success("Sucessfuly Updated User Info");
     } catch (error) {
       toast.error("Something Went Wrong");

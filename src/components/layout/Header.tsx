@@ -11,17 +11,18 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../hooks/Auth";
 import axios from "axios";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export function Header() {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const { logged, theme, setTheme, authUser, setLogged } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const handleLogout = async () => {
-    await axios.get("http://localhost:3000/api/logout", {
+    await axios.get(`${backUrl}/api/logout`, {
       withCredentials: true,
     });
-  
+
     toast.error(`Log Out Sucessflly mr/ms ${authUser?.fullName}`);
     setTimeout(() => {
       setLogged(false);

@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/Auth";
 import { SelectedBus } from "./selectedBus";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 interface authProps {
   fullName: string;
@@ -15,6 +15,7 @@ interface authProps {
 }
 
 export const UserProfile: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const { authUser } = useAuth();
   const userId = authUser?.id;
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -38,7 +39,7 @@ export const UserProfile: React.FC = () => {
       console.log("No image selected");
     }
     try {
-      await axios.put(`http://localhost:3000/api/user/channgepwd/`, formData);
+      await axios.put(`${backUrl}/api/user/channgepwd/`, formData);
       toast.success("Your profile has been updated successfully.");
     } catch (error: any) {
       const errorMessage = error.response.data.data;
@@ -52,7 +53,7 @@ export const UserProfile: React.FC = () => {
     async function fetchUser() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/user/viewoneuser/${userId}`,
+          `${backUrl}/api/user/viewoneuser/${userId}`,
         );
 
         const userData = response.data.data;

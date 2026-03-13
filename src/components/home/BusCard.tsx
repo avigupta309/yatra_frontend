@@ -18,10 +18,11 @@ interface viewMoreProps {
 }
 
 export function BusCard({ viewMore, setStopView }: viewMoreProps) {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [bus, setBus] = useState<Bus[]>([]);
 
   useEffect(() => {
-    if (bus.length <= viewMore) {
+    if (bus?.length <= viewMore) {
       setStopView(false);
     } else {
       setStopView(true);
@@ -30,7 +31,7 @@ export function BusCard({ viewMore, setStopView }: viewMoreProps) {
 
   useEffect(() => {
     async function fetchingData() {
-      const response = await axios.get("http://localhost:3000/api/bus/viewbus");
+      const response = await axios.get(`${backUrl}/api/bus/viewbus`);
       if (response) {
         setBus(response.data.bus);
       }
@@ -55,7 +56,7 @@ export function BusCard({ viewMore, setStopView }: viewMoreProps) {
 
   return (
     <div className="space-y-4">
-      {bus.slice(0, viewMore).map((busItem, index) => (
+      {bus?.slice(0, viewMore)?.map((busItem, index) => (
         <div
           key={index}
           className="flex flex-col lg:flex-row lg:items-center justify-between p-4 mt-5 rounded-lg border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300"
@@ -113,7 +114,7 @@ export function BusCard({ viewMore, setStopView }: viewMoreProps) {
 
             {/* Amenities */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {busItem.amenities.slice(0, 4).map((amenity, idx) => (
+              {busItem.amenities?.slice(0, 4).map((amenity, idx) => (
                 <div
                   key={idx}
                   className="flex items-center space-x-1 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded"

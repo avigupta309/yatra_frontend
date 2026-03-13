@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const PaymentProcessing: React.FC = () => {
+  const backUrl = import.meta.env.VITE_BACKEND_URL;
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const { userInfo } = useAuth();
   const navigate = useNavigate();
@@ -24,14 +25,14 @@ const PaymentProcessing: React.FC = () => {
     }
 
     try {
-      await axios.post(`http://localhost:3000/api/bookedticket`, userInfo);
+      await axios.post(`${backUrl}/api/bookedticket`, userInfo);
       toast.success("Wow Payment Sucessfull !!");
       setTimeout(() => {
         navigate("/");
       }, 2000);
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error("Something went wrong during payment");
-      console.log(error.message)
+      console.log(error.message);
     }
   };
 
