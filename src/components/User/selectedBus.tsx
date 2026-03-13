@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/Auth";
 import { ticketDetailsProps } from "../../types";
+import { toast } from "react-toastify";
 
 export const SelectedBus = () => {
   const backUrl = import.meta.env.VITE_BACKEND_URL;
@@ -19,7 +20,7 @@ export const SelectedBus = () => {
         });
         setTicketDetails(response.data.ticketBooked);
       } catch (error) {
-        console.error("Error fetching tickets:", error);
+        toast.error("Error to fetch tickets");
       } finally {
         setLoading(false);
       }

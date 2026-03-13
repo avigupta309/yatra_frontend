@@ -52,9 +52,8 @@ export function UserModal({ closeModal, userId }: ModalProps) {
     if (data.profilePic && data.profilePic.length > 0) {
       formData.append("profilePic", data.profilePic[0]);
     } else {
-      console.log("No image selected");
+      toast.error("No image selected");
     }
-    console.log(data);
     try {
       await axios.put(`${backUrl}/api/user/changerole/${userId}`, formData);
       toast.success("Sucessfuly Updated User Info");

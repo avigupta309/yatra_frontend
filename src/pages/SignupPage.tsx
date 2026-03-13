@@ -40,7 +40,6 @@ export const SignupPage: React.FC = () => {
       setUserSignUp(response.data);
       toast.success("The user account has been created successfully.");
     } catch (error: any) {
-      console.error("Signup error:", error);
       toast.error(error.response?.data?.data || "Server error during signup.");
     }
   };

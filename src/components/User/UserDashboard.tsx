@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Save, MapPin, Thermometer } from "lucide-react";
 
@@ -18,11 +17,9 @@ export const UserDashboard = () => {
   } = useForm<SettingsFormProps>();
 
   const onSubmit = (data: SettingsFormProps) => {
-    console.log("Updated Data:", data);
-    // connect your backend here
+
   };
 
-  // 🔥 Dummy weather data (you will replace this later)
   const weatherData = {
     location: "Kathmandu",
     temperature: 26,

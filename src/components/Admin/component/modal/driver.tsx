@@ -44,7 +44,6 @@ export function DriverModal({ closeModal, driverId }: ModalProps) {
   }, [driverId, reset]);
 
   const onSubmit = async (data: driverProps) => {
-    console.log(data);
     const formData = new FormData();
     formData.append("driverName", data.driverName);
     formData.append("email", data.email);
@@ -52,7 +51,7 @@ export function DriverModal({ closeModal, driverId }: ModalProps) {
     if (data.profilePic && data.profilePic.length > 0) {
       formData.append("profilePic", data.profilePic[0]);
     } else {
-      console.log("No image selected");
+      toast.error("No image selected");
     }
     try {
       await axios.put(

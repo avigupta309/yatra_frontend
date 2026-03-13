@@ -35,7 +35,6 @@ export function BusModal({ viewModal, busId }: ModalProps) {
     "w-full border rounded-lg px-4 py-3 pr-10 focus:ring-2 focus:ring-blue-500 outline-none";
 
   const onSubmit = async (data: BusFormInputs) => {
-    console.log(data)
     const formData = new FormData();
     formData.append("busData", JSON.stringify(data));
     if (data.exteriorPic) {
@@ -49,7 +48,6 @@ export function BusModal({ viewModal, busId }: ModalProps) {
         "http://localhost:3000/api/bus/busedit",
         formData,
       );
-      console.log(response.data);
       toast.success("Bus Updated Sucessfully...");
     } catch (error: any) {
       toast.error("Something Went Wrong");

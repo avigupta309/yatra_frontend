@@ -36,7 +36,7 @@ export const UserProfile: React.FC = () => {
     if (data.profilePic && data.profilePic.length > 0) {
       formData.append("profilePic", data.profilePic[0]);
     } else {
-      console.log("No image selected");
+     toast.error("No image selected");
     }
     try {
       await axios.put(`${backUrl}/api/user/channgepwd/`, formData);

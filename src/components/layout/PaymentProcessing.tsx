@@ -32,7 +32,6 @@ const PaymentProcessing: React.FC = () => {
       }, 2000);
     } catch (error: any) {
       toast.error("Something went wrong during payment");
-      console.log(error.message);
     }
   };
 

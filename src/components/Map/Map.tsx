@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface coordinatesProps {
   latitude: number;
@@ -31,10 +32,9 @@ const Map: React.FC = () => {
         );
         setCoordinates(response.data);
       } catch (error) {
-        console.log("cannot get latlng");
+        toast.error("cannot get latlng");
       }
     }
-    // setInterval(fetchLatLng, 3000);
     fetchLatLng();
   }, [id]);
   const position: [number, number] =
